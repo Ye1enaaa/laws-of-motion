@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laws of Motion</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #ffffff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  h1 {
+    margin: 20px 0 10px 0;
+    font-size: 2rem;
+    text-align: center;
+    color: #0077cc;
+  }
+
+  /* Tabs container */
+  #tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 10px 0;
+    gap: 10px;
+    padding: 5px;
+    background: #f0f0f0;
+    border-radius: 12px;
+    max-width: 95%;
+  }
+
+  .tab-button {
+    flex: 0 0 auto;
+    padding: 10px 18px;
+    cursor: pointer;
+    background: #e0e0e0;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    transition: all 0.3s;
+    font-weight: bold;
+    white-space: nowrap;
+    color: #333;
+  }
+
+  .tab-button:hover {
+    background: #0077cc;
+    color: #fff;
+    transform: scale(1.05);
+  }
+
+  .tab-button.active {
+    background: #0077cc;
+    color: #fff;
+    border: 1px solid #0077cc;
+  }
+
+  /* Video container */
+  #video-container {
+    width: 95%;
+    max-width: 900px;
+    margin-top: 20px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  }
+
+  video {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  /* Scrollbar for tabs */
+  #tabs::-webkit-scrollbar {
+    height: 8px;
+  }
+  #tabs::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .tab-button {
+      padding: 8px 14px;
+      font-size: 14px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>Laws of Motion</h1>
+
+<div id="tabs">
+  <button class="tab-button" data-video="1st-law/1stlaw1.mp4" data-tab="First Law 1">First Law 1</button>
+  <button class="tab-button" data-video="1st-law/1stlaw2.mp4" data-tab="First Law 2">First Law 2</button>
+  <button class="tab-button" data-video="1st-law/1stlaw3.mp4" data-tab="First Law 3">First Law 3</button>
+  <button class="tab-button" data-video="1st-law/1stlaw4.mp4" data-tab="First Law 4">First Law 4</button>
+  <button class="tab-button" data-video="1st-law/1stlaw5.mp4" data-tab="First Law 5">First Law 5</button>
+  
+  <button class="tab-button" data-video="2nd-law/2ndlaw1.mp4" data-tab="Second Law 1">Second Law 1</button>
+  <button class="tab-button" data-video="2nd-law/2ndlaw2.mp4" data-tab="Second Law 2">Second Law 2</button>
+  <button class="tab-button" data-video="2nd-law/2ndlaw3.mp4" data-tab="Second Law 3">Second Law 3</button>
+  <button class="tab-button" data-video="2nd-law/2ndlaw4.mp4" data-tab="Second Law 4">Second Law 4</button>
+  <button class="tab-button" data-video="2nd-law/2ndlaw5.mp4" data-tab="Second Law 5">Second Law 5</button>
+
+  <button class="tab-button" data-video="3rd-law/3rdlaw1.mp4" data-tab="Third Law 1">Third Law 1</button>
+  <button class="tab-button" data-video="3rd-law/3rdlaw2.mp4" data-tab="Third Law 2">Third Law 2</button>
+  <button class="tab-button" data-video="3rd-law/3rdlaw3.mp4" data-tab="Third Law 3">Third Law 3</button>
+  <button class="tab-button" data-video="3rd-law/3rdlaw4.mp4" data-tab="Third Law 4">Third Law 4</button>
+  <button class="tab-button" data-video="3rd-law/3rdlaw5.mp4" data-tab="Third Law 5">Third Law 5</button>
+</div>
+
+<div id="video-container">
+  <video id="video-player" controls>
+    <source src="1st-law/1stlaw1.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+  </video>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab-button');
+  const videoPlayer = document.getElementById('video-player');
+
+  function selectTab(tabNumber) {
+    tabs.forEach(t => t.classList.remove('active')); // remove active from all
+    const tab = Array.from(tabs).find(t => t.getAttribute('data-tab') === tabNumber);
+    if(tab) {
+      tab.classList.add('active');
+      videoPlayer.src = tab.getAttribute('data-video');
+      videoPlayer.play();
+    }
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabNumber = tab.getAttribute('data-tab');
+      selectTab(tabNumber);
+      history.replaceState(null, '', `?tab=${tabNumber}`);
+    });
+  });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const tabNumber = params.get('tab') || 'First Law 1';
+    selectTab(tabNumber);
+  });
+</script>
+
+</body>
+</html>
